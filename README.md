@@ -246,12 +246,12 @@ Below are some sample statistics. According to this, 489.02 Mbps of the 1.78 Gbp
 ```
 Global Statistics
 
-connection   : localhost, Port 4501                       total_tx_L2  : 1.78 Gbps                      
-version      : STL @ v3.06                                total_tx_L1  : 1.8 Gbps                       
-cpu_util.    : 1.43% @ 1 cores (1 per dual port)          total_rx     : 1.29 Gbps                      
-rx_cpu_util. : 0.17% / 111.47 Kpps                        total_pps    : 150.01 Kpps                    
-async_util.  : 0% / 6.45 bps                              drop_rate    : 489.02 Mbps                    
-total_cps.   : 0 cps                                      queue_full   : 33,524 pkts                    
+connection   : localhost, Port 4501                       total_tx_L2  : 1.78 Gbps  
+version      : STL @ v3.06                                total_tx_L1  : 1.8 Gbps   
+cpu_util.    : 1.43% @ 1 cores (1 per dual port)          total_rx     : 1.29 Gbps  
+rx_cpu_util. : 0.17% / 111.47 Kpps                        total_pps    : 150.01 Kpps
+async_util.  : 0% / 6.45 bps                              drop_rate    : 489.02 Mbps
+total_cps.   : 0 cps                                      queue_full   : 33,524 pkts
 
 Port Statistics
 

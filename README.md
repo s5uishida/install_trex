@@ -51,7 +51,7 @@ Each VMs are as follows.
 | VM-DUT | each UPF DUT<br>(Device Under Test) | 192.168.0.151/24 | Ubuntu 24.04<br>or 22.04 | 2 | 8GB | 20GB |
 
 The network interfaces of each VM are as follows.
-| VM | Device | Model | Linux Bridge | IP address | Interface | Under DPDK |
+| VM | Device | Model | Linux Bridge | IP address | Interface | Under<br>DPDK |
 | --- | --- | --- | --- | --- | --- | --- |
 | VM-TG | ens18 | VirtIO | vmbr1 | 10.0.0.131/24 | (NAPT NW) | -- |
 | | ens19 | VirtIO | mgbr0 | 192.168.0.131/24 | (Mgmt NW) | -- |

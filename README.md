@@ -242,7 +242,7 @@ To check the traffic statistics, type `tui` in the TRex console to switch the vi
 ```
 # trex>tui
 ```
-Below are some sample statistics. According to this, 489.02 Mbps of the 1.78 Gbps was dropped, and 1.29 Gbps was received.
+Below are some sample statistics. According to this, 489.02 Mbps of 1.78 Gbps was dropped, and 1.29 Gbps was received.
 ```
 Global Statistics
 

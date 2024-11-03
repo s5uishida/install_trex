@@ -72,6 +72,11 @@ Linux Bridges of Proxmox VE are as follows.
 | vmbr4 | 192.168.14.0/24 | N4 |
 | vmbr6 | 192.168.16.0/24 | N6 |
 
+UE IP address and TEID are as follows.
+| UE IP address | TEID |
+| --- | --- |
+| 10.45.0.2/24 | 0x0000001 |
+
 <a id="install"></a>
 
 ## Install TRex

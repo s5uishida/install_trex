@@ -40,7 +40,7 @@ The following minimum configuration was set as a condition.
 
 The built simulation environment is as follows.
 
-<img src="./images/network-overview.png" title="./images/network-overview.png" width=800px></img>
+<img src="./images/network-overview.png" title="./images/network-overview.png" width=700px></img>
 
 The TRex used is as follows.
 - TRex v3.06 (2024.09.17) - https://github.com/cisco-system-traffic-generator/trex-core

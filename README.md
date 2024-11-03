@@ -23,6 +23,7 @@ This is intended as a preparation for measuring the performance of open source U
   - [Create load profile](#load_profile)
   - [Set kernel parameter](#set_param)
 - [Run TRex](#run)
+- [Sample Configurations](#sample_conf)
 - [Changelog (summary)](#changelog)
 
 ---
@@ -295,6 +296,12 @@ tui>
 With the above steps, TRex has been constructed.
 Although the settings differ for each UPF, we believe this has made some progress in preparing to measure open source UPFs performance using TRex.
 I would like to thank the excellent developers and all the contributors of TRex.
+
+<a id="sample_conf"></a>
+
+## Sample Configurations
+
+- [Simple Measurement of eUPF(eBPF/XDP UPF) Performance](https://github.com/s5uishida/simple_measurement_of_eupf_performance)
 
 <a id="changelog"></a>
 

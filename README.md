@@ -237,11 +237,11 @@ In the following example, use the load profile `gtp_1pkt_simple.py` to apply GTP
 # cd /opt/trex
 # ./trex-console
 ...
-# trex>start -f stl/gtp_1pkt_simple.py -p 0 -m 150kpps -d 60
+trex>start -f stl/gtp_1pkt_simple.py -p 0 -m 150kpps -d 60
 ```
 To check the traffic statistics, type `tui` in the TRex console to switch the view.
 ```
-# trex>tui
+trex>tui
 ```
 Below are some sample statistics. According to this, 489.02 Mbps of 1.78 Gbps was dropped, and 1.29 Gbps was received.
 ```

@@ -294,7 +294,7 @@ tui>
 
 ---
 With the above steps, TRex has been constructed.
-Although the settings differ for each UPF, we believe this has made some progress in preparing to measure open source UPFs performance using TRex.
+Although the settings differ for each UPF, I believe this has made some progress in preparing to measure open source UPFs performance using TRex.
 I would like to thank the excellent developers and all the contributors of TRex.
 
 <a id="sample_conf"></a>

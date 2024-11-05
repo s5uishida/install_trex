@@ -176,6 +176,7 @@ I edited this file created as follows.
 ### Create load profile
 
 I am using the following for the TRex load profile.
+Also, the payload size is set to 1400 bytes.
 
 `/opt/trex/stl/gtp_1pkt_simple.py`
 ```

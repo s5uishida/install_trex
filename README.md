@@ -85,7 +85,7 @@ UE IP address and TEID are as follows.
 ## Install TRex
 
 Please refer to the following for installing TRex.
-- TRex v3.06 (2024.09.17) - https://trex-tgn.cisco.com/trex/doc/trex_manual.html#_download_and_installation
+- TRex v3.06 (2024.09.17) - https://github.com/cisco-system-traffic-generator/trex-core/wiki
 
 This section explains how to build and install TRex v3.06 to `/opt/trex` directory.
 This time, build TRex using Scapy v2.6.1 instead of v2.4.3 included in TRex v3.06.

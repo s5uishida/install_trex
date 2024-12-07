@@ -1,0 +1,81 @@
+diff -urN trex-core.orig/.env trex-core/.env
+--- trex-core.orig/.env	2024-12-07 20:19:59.285029962 +0900
++++ trex-core/.env	2024-12-07 20:25:06.027985436 +0900
+@@ -1,4 +1,4 @@
+ # python path 
+-PYTHONPATH="scripts/automation/trex_control_plane/interactive/:scripts/automation/:scripts/external_libs/scapy-2.4.3:scripts/external_libs/dpkt-1.9.1:scripts/external_libs/repoze:scripts/external_libs/simpy-3.0.10"
++PYTHONPATH="scripts/automation/trex_control_plane/interactive/:scripts/automation/:scripts/external_libs/scapy-2.6.1:scripts/external_libs/dpkt-1.9.1:scripts/external_libs/repoze:scripts/external_libs/simpy-3.0.10"
+ 
+ 
+diff -urN trex-core.orig/linux_dpdk/ws_main.py trex-core/linux_dpdk/ws_main.py
+--- trex-core.orig/linux_dpdk/ws_main.py	2024-12-07 20:19:59.778028463 +0900
++++ trex-core/linux_dpdk/ws_main.py	2024-12-07 22:22:06.600285346 +0900
+@@ -2268,7 +2268,7 @@
+         'jsonrpclib-pelix-0.4.1',
+         'pyyaml-3.11',
+         'pyzmq-ctypes',
+-        'scapy-2.4.3',
++        'scapy-2.6.1',
+         'texttable-0.8.4',
+         'simpy-3.0.10',
+         'trex-openssl',
+diff -urN trex-core.orig/scripts/automation/trex_control_plane/client_utils/external_packages.py trex-core/scripts/automation/trex_control_plane/client_utils/external_packages.py
+--- trex-core.orig/scripts/automation/trex_control_plane/client_utils/external_packages.py	2024-12-07 20:20:00.026027802 +0900
++++ trex-core/scripts/automation/trex_control_plane/client_utils/external_packages.py	2024-12-07 22:19:11.655216997 +0900
+@@ -14,7 +14,7 @@
+ 
+ CLIENT_UTILS_MODULES = [
+                         'texttable-0.8.4',
+-                        'scapy-2.4.3'
++                        'scapy-2.6.1'
+                         'zmq',
+                         ]
+ 
+diff -urN trex-core.orig/scripts/automation/trex_control_plane/interactive/trex/__init__.py trex-core/scripts/automation/trex_control_plane/interactive/trex/__init__.py
+--- trex-core.orig/scripts/automation/trex_control_plane/interactive/trex/__init__.py	2024-12-07 20:20:00.031027806 +0900
++++ trex-core/scripts/automation/trex_control_plane/interactive/trex/__init__.py	2024-12-07 22:20:23.501440859 +0900
+@@ -30,7 +30,7 @@
+     # arch-dep requires intel/arm, 32bit/64bit directories
+     ext_libs = [ {'name': 'texttable',    'dir': 'texttable-0.8.4'},
+                  {'name': 'yaml',         'dir': 'pyyaml-3.11', 'py-dep': True},
+-                 {'name': 'scapy',        'dir': 'scapy-2.4.3'},
++                 {'name': 'scapy',        'dir': 'scapy-2.6.1'},
+                  {'name': 'zmq',          'dir': 'pyzmq-ctypes'},
+                  {'name': 'simpy',        'dir': 'simpy-3.0.10'},
+                  {'name': 'trex_openssl', 'dir': 'trex-openssl'},
+diff -urN trex-core.orig/scripts/automation/trex_control_plane/interactive/trex/wireless/trex_ext.py trex-core/scripts/automation/trex_control_plane/interactive/trex/wireless/trex_ext.py
+--- trex-core.orig/scripts/automation/trex_control_plane/interactive/trex/wireless/trex_ext.py	2024-12-07 20:20:00.060027824 +0900
++++ trex-core/scripts/automation/trex_control_plane/interactive/trex/wireless/trex_ext.py	2024-12-07 22:19:48.504337108 +0900
+@@ -16,7 +16,7 @@
+ # arch-dep requires intel/arm, ucs2/ucs4, 32bit/64bit directories
+ CLIENT_UTILS_MODULES = [ {'name': 'texttable-0.8.4'},
+                          {'name': 'pyyaml-3.11', 'py-dep': True},
+-                         {'name': 'scapy-2.4.3'},
++                         {'name': 'scapy-2.6.1'},
+                          {'name': 'simpy-3.0.10'},
+                          {'name': 'trex-openssl'},
+                         ]
+diff -urN trex-core.orig/scripts/automation/trex_control_plane/unit_tests/outer_packages.py trex-core/scripts/automation/trex_control_plane/unit_tests/outer_packages.py
+--- trex-core.orig/scripts/automation/trex_control_plane/unit_tests/outer_packages.py	2024-12-07 20:20:00.064027827 +0900
++++ trex-core/scripts/automation/trex_control_plane/unit_tests/outer_packages.py	2024-12-07 22:20:56.672535931 +0900
+@@ -6,7 +6,7 @@
+     raise Exception('Wrong path to external libs: %s' % EXT_PATH)
+ 
+ CLIENT_UTILS_MODULES = [
+-                         {'name': 'scapy-2.4.3'},
++                         {'name': 'scapy-2.6.1'},
+                          {'name': 'texttable-0.8.4'},
+                         ]
+ 
+diff -urN trex-core.orig/scripts/cps_ndr.py trex-core/scripts/cps_ndr.py
+--- trex-core.orig/scripts/cps_ndr.py	2024-12-07 20:20:00.230027934 +0900
++++ trex-core/scripts/cps_ndr.py	2024-12-07 22:18:26.256756391 +0900
+@@ -17,7 +17,7 @@
+ here = pathlib.Path(__file__).parent
+ sys.path.insert(0, str(here / "external_libs/texttable-0.8.4"))
+ sys.path.insert(0, str(here / "external_libs/pyyaml-3.11/python3"))
+-sys.path.insert(0, str(here / "external_libs/scapy-2.4.3"))
++sys.path.insert(0, str(here / "external_libs/scapy-2.6.1"))
+ sys.path.insert(0, str(here / "external_libs/pyzmq-ctypes"))
+ sys.path.insert(0, str(here / "external_libs/simpy-3.0.10"))
+ sys.path.insert(0, str(here / "external_libs/trex-openssl"))

@@ -113,7 +113,7 @@ Next, download Scapy v2.6.1 and extract it to the appropriate directory as follo
 # wget https://github.com/secdev/scapy/archive/refs/tags/v2.6.1.tar.gz
 # tar -C ~/trex-core/scripts/external_libs -zxvf v2.6.1.tar.gz
 ```
-Next, apply [the patch](https://raw.githubusercontent.com/s5uishida/install_trex/refs/heads/main/patches/update-scapy.patch) that changes Scapy v2.4.3 to v2.6.1.
+Next, apply [this patch](https://raw.githubusercontent.com/s5uishida/install_trex/refs/heads/main/patches/update-scapy.patch) that changes Scapy v2.4.3 to v2.6.1.
 ```
 # cd ~/
 # wget https://raw.githubusercontent.com/s5uishida/install_trex/refs/heads/main/patches/update-scapy.patch

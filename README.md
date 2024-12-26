@@ -78,7 +78,7 @@ Linux Bridges of Proxmox VE are as follows.
 UE IP address and TEID are as follows.
 | UE IP address | TEID |
 | --- | --- |
-| 10.45.0.2/24 | 0x0000001 |
+| 10.45.0.2/24 | 0x00000001 |
 
 <a id="install"></a>
 

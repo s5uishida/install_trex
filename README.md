@@ -181,7 +181,9 @@ I edited this file created as follows.
   interfaces: ['00:14.0', '00:15.0']
   port_info:
       - ip: 192.168.13.131
+        default_gw: 192.168.13.151
       - ip: 192.168.16.152
+        default_gw: 192.168.16.151
 
   platform:
       master_thread_id: 0

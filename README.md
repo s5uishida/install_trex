@@ -256,12 +256,52 @@ First, start the TRex server.
 # cd /opt/trex
 # ./t-rex-64 -i --no-scapy-server
 ```
-Then, open another console and apply traffic to the DUT.
-In the following example, use the load profile `gtp_1pkt_simple.py` to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds.
+Then, open another terminal and connect to the TRex server to check the status of each port.
+
 ```
 # cd /opt/trex
 # ./trex-console
 ...
+trex>
+```
+```
+trex>portattr 
+Port Status
+
+     port       |          0           |          1           
+----------------+----------------------+---------------------
+driver          |      net_virtio      |      net_virtio      
+description     |  Virtio network dev  |  Virtio network dev  
+link status     |          UP          |          UP          
+link speed      |       200 Gb/s       |       200 Gb/s       
+port status     |         IDLE         |         IDLE         
+promiscuous     |         off          |         off          
+multicast       |         off          |         off          
+flow ctrl       |         N/A          |         N/A          
+vxlan fs        |          -           |          -           
+--              |                      |                      
+layer mode      |         IPv4         |         IPv4         
+src IPv4        |    192.168.13.131    |    192.168.16.152    
+IPv6            |         off          |         off          
+src MAC         |  bc:24:11:6b:bf:13   |  bc:24:11:5c:31:7b   
+---             |                      |                      
+Destination     |    192.168.13.151    |    192.168.16.151    
+ARP Resolution  |  bc:24:11:4a:0c:dc   |  bc:24:11:42:ed:8e   
+----            |                      |                      
+VLAN            |          -           |          -           
+-----           |                      |                      
+PCI Address     |     0000:00:14.0     |     0000:00:15.0     
+NUMA Node       |          -1          |          -1          
+RX Filter Mode  |    hardware match    |    hardware match    
+RX Queueing     |         off          |         off          
+Grat ARP        |  every 120 seconds   |  every 120 seconds   
+------          |                      |                      
+
+trex>
+```
+Then, apply traffic to the DUT.
+In the following example, use the load profile `gtp_1pkt_simple.py` to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds.
+```
 trex>start -f stl/gtp_1pkt_simple.py -p 0 -m 150kpps -d 60
 ```
 To check the traffic statistics, type `tui` in the TRex console to switch the view.

@@ -257,7 +257,6 @@ First, start the TRex server.
 # ./t-rex-64 -i --no-scapy-server
 ```
 Then, open another terminal and connect to the TRex server to check the status of each port.
-
 ```
 # cd /opt/trex
 # ./trex-console

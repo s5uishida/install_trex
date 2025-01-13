@@ -285,7 +285,7 @@ IPv6            |         off          |         off
 src MAC         |  bc:24:11:6b:bf:13   |  bc:24:11:5c:31:7b   
 ---             |                      |                      
 Destination     |    192.168.13.151    |    192.168.16.151    
-ARP Resolution  |  bc:24:11:4a:0c:dc   |  bc:24:11:42:ed:8e   
+ARP Resolution  |  bc:24:11:74:fe:7b   |  bc:24:11:bf:d4:23   
 ----            |                      |                      
 VLAN            |          -           |          -           
 -----           |                      |                      
@@ -295,6 +295,44 @@ RX Filter Mode  |    hardware match    |    hardware match
 RX Queueing     |         off          |         off          
 Grat ARP        |  every 120 seconds   |  every 120 seconds   
 ------          |                      |                      
+
+trex>
+```
+Switch ports: `[0, 1]` into service mode and ping to the IP addresses (`192.168.13.151` and `192.168.16.151`) of the DUT.
+```
+trex>service
+
+Enabling service mode on port(s): [0, 1]                     [SUCCESS]
+
+12.98 [ms]
+
+trex(service)>
+```
+```
+trex(service)>ping -p 0 -d 192.168.13.151 -n 3
+
+Pinging 192.168.13.151 from port 0 with 64 bytes of data:    
+Reply from 192.168.13.151: bytes=64, time=46.84ms, TTL=64
+Reply from 192.168.13.151: bytes=64, time=2.78ms, TTL=64
+Reply from 192.168.13.151: bytes=64, time=1.59ms, TTL=64
+trex(service)>
+```
+```
+trex(service)>ping -p 1 -d 192.168.16.151 -n 3
+
+Pinging 192.168.16.151 from port 1 with 64 bytes of data:    
+Reply from 192.168.16.151: bytes=64, time=9.11ms, TTL=64
+Reply from 192.168.16.151: bytes=64, time=1.47ms, TTL=64
+Reply from 192.168.16.151: bytes=64, time=2.66ms, TTL=64
+trex(service)>
+```
+Once confirmed that ping works, the service mode exit.
+```
+trex(service)>service --off
+
+Disabling service mode on port(s): [0, 1]                    [SUCCESS]
+
+11.86 [ms]
 
 trex>
 ```

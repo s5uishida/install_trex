@@ -213,7 +213,7 @@ class STLS1(object):
         return STLStream(
             packet =
                     STLPktBuilder(
-                        pkt = Ether()/IP(src="192.168.13.131",dst="192.168.13.151")/
+                        pkt = Ether()/IP(src="192.168.13.131",dst="192.168.13.151",version=4)/
                                 UDP(dport=2152,sport=2152)/
                                 GTP_U_Header(teid=0x00000001)/
                                 GTPPDUSessionContainer(type=1,QFI=1)/

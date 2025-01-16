@@ -379,7 +379,7 @@ Then, apply traffic to the DUT.
 
 <a id="ul_measurement"></a>
 
-#### UpLink measurement
+### UpLink measurement
 
 In the following example, use the load profile `gtp_1pkt_simple.py` to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds.
 ```
@@ -440,7 +440,7 @@ tui>
 
 <a id="dl_measurement"></a>
 
-#### DownLink measurement
+### DownLink measurement
 
 In the following example, use the load profile `udp_1pkt_simple.py` to apply UDP traffic to the DUT at 250 Kpps for 60 seconds.
 ```

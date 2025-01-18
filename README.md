@@ -381,7 +381,7 @@ Then, apply traffic to the DUT.
 
 ### UpLink measurement
 
-In the following example, use the load profile [`gtp_1pkt_simple.py`](#ul_profile) to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds.
+In the following example, use the load profile [`gtp_1pkt_simple.py`](#ul_profile) to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds **via port 0**.
 ```
 trex>start -f stl/gtp_1pkt_simple.py -p 0 -m 150kpps -d 60
 ```
@@ -442,7 +442,7 @@ tui>
 
 ### DownLink measurement
 
-In the following example, use the load profile [`udp_1pkt_simple.py`](#dl_profile) to apply UDP traffic to the DUT at 250 Kpps for 60 seconds.
+In the following example, use the load profile [`udp_1pkt_simple.py`](#dl_profile) to apply UDP traffic to the DUT at 250 Kpps for 60 seconds **via port 1**.
 ```
 trex>start -f stl/udp_1pkt_simple.py -p 1 -m 250kpps -d 60
 ```

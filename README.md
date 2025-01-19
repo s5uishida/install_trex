@@ -393,12 +393,12 @@ Below are some sample statistics. According to this, 640.51 Mbps of 1.79 Gbps wa
 ```
 Global Statistics
 
-connection   : localhost, Port 4501                       total_tx_L2  : 1.79 Gbps                      
-version      : STL @ v3.06                                total_tx_L1  : 1.81 Gbps                      
-cpu_util.    : 1.57% @ 1 cores (1 per dual port)          total_rx     : 1.15 Gbps                      
-rx_cpu_util. : 0.29% / 99.15 Kpps                         total_pps    : 150.14 Kpps                    
-async_util.  : 0% / 6.26 bps                              drop_rate    : 640.51 Mbps                    
-total_cps.   : 0 cps                                      queue_full   : 21,309 pkts                    
+connection   : localhost, Port 4501                       total_tx_L2  : 1.79 Gbps
+version      : STL @ v3.06                                total_tx_L1  : 1.81 Gbps
+cpu_util.    : 1.57% @ 1 cores (1 per dual port)          total_rx     : 1.15 Gbps
+rx_cpu_util. : 0.29% / 99.15 Kpps                         total_pps    : 150.14 Kpps
+async_util.  : 0% / 6.26 bps                              drop_rate    : 640.51 Mbps
+total_cps.   : 0 cps                                      queue_full   : 21,309 pkts
 
 Port Statistics
 
@@ -450,12 +450,12 @@ Below are some sample statistics. According to this, 504.13 Mbps of 2.89 Gbps wa
 ```
 Global Statistics
 
-connection   : localhost, Port 4501                       total_tx_L2  : 2.89 Gbps                      
-version      : STL @ v3.06                                total_tx_L1  : 2.93 Gbps                      
-cpu_util.    : 2.78% @ 1 cores (1 per dual port)          total_rx     : 2.38 Gbps                      
-rx_cpu_util. : 0.24% / 200.08 Kpps                        total_pps    : 249.75 Kpps                    
-async_util.  : 0% / 7.43 bps                              drop_rate    : 504.13 Mbps                    
-total_cps.   : 0 cps                                      queue_full   : 12,478 pkts                    
+connection   : localhost, Port 4501                       total_tx_L2  : 2.89 Gbps
+version      : STL @ v3.06                                total_tx_L1  : 2.93 Gbps
+cpu_util.    : 2.78% @ 1 cores (1 per dual port)          total_rx     : 2.38 Gbps
+rx_cpu_util. : 0.24% / 200.08 Kpps                        total_pps    : 249.75 Kpps
+async_util.  : 0% / 7.43 bps                              drop_rate    : 504.13 Mbps
+total_cps.   : 0 cps                                      queue_full   : 12,478 pkts
 
 Port Statistics
 

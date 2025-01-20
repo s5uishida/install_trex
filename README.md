@@ -389,16 +389,16 @@ To check the traffic statistics, type `tui` in the TRex console to switch the vi
 ```
 trex>tui
 ```
-Below are some sample statistics. According to this, 640.51 Mbps of 1.79 Gbps was dropped, and 1.15 Gbps was received.
+Below are some sample statistics. According to this, 705.53 Mbps of 1.79 Gbps was dropped, and 1.08 Gbps was received.
 ```
 Global Statistics
 
 connection   : localhost, Port 4501                       total_tx_L2  : 1.79 Gbps
 version      : STL @ v3.06                                total_tx_L1  : 1.81 Gbps
-cpu_util.    : 1.57% @ 1 cores (1 per dual port)          total_rx     : 1.15 Gbps
-rx_cpu_util. : 0.29% / 99.15 Kpps                         total_pps    : 150.14 Kpps
-async_util.  : 0% / 6.26 bps                              drop_rate    : 640.51 Mbps
-total_cps.   : 0 cps                                      queue_full   : 21,309 pkts
+cpu_util.    : 1.68% @ 1 cores (1 per dual port)          total_rx     : 1.08 Gbps
+rx_cpu_util. : 0.18% / 93.65 Kpps                         total_pps    : 150.07 Kpps
+async_util.  : 0% / 4.79 bps                              drop_rate    : 705.53 Mbps
+total_cps.   : 0 cps                                      queue_full   : 12,034 pkts
 
 Port Statistics
 
@@ -408,29 +408,29 @@ owner      |              root |              root |
 link       |                UP |                UP |                   
 state      |      TRANSMITTING |              IDLE |                   
 speed      |          200 Gb/s |          200 Gb/s |                   
-CPU util.  |             1.57% |              0.0% |                   
+CPU util.  |             1.68% |              0.0% |                   
 --         |                   |                   |                   
-Tx bps L2  |         1.79 Gbps |             0 bps |         1.79 Gbps 
-Tx bps L1  |         1.81 Gbps |             0 bps |         1.81 Gbps 
-Tx pps     |       150.14 Kpps |             0 pps |       150.14 Kpps 
+Tx bps L2  |         1.79 Gbps |          0.09 bps |         1.79 Gbps 
+Tx bps L1  |         1.81 Gbps |          0.13 bps |         1.81 Gbps 
+Tx pps     |       150.07 Kpps |             0 pps |       150.07 Kpps 
 Line Util. |            0.91 % |               0 % |                   
 ---        |                   |                   |                   
-Rx bps     |             0 bps |         1.15 Gbps |         1.15 Gbps 
-Rx pps     |             0 pps |        99.15 Kpps |        99.15 Kpps 
+Rx bps     |             0 bps |         1.08 Gbps |         1.08 Gbps 
+Rx pps     |             0 pps |        93.65 Kpps |        93.65 Kpps 
 ----       |                   |                   |                   
-opackets   |           6178565 |                 0 |           6178565 
-ipackets   |                 0 |           4079568 |           4079568 
-obytes     |        9206061850 |                 0 |        9206061850 
-ibytes     |                 0 |        5899055328 |        5899055328 
-tx-pkts    |        6.18 Mpkts |            0 pkts |        6.18 Mpkts 
-rx-pkts    |            0 pkts |        4.08 Mpkts |        4.08 Mpkts 
-tx-bytes   |           9.21 GB |               0 B |           9.21 GB 
-rx-bytes   |               0 B |            5.9 GB |            5.9 GB 
+opackets   |           2687829 |                 1 |           2687830 
+ipackets   |                 0 |           1739130 |           1739130 
+obytes     |        4004865210 |                46 |        4004865256 
+ibytes     |                 0 |        2514780580 |        2514780580 
+tx-pkts    |        2.69 Mpkts |            1 pkts |        2.69 Mpkts 
+rx-pkts    |            0 pkts |        1.74 Mpkts |        1.74 Mpkts 
+tx-bytes   |              4 GB |              46 B |              4 GB 
+rx-bytes   |               0 B |           2.51 GB |           2.51 GB 
 -----      |                   |                   |                   
 oerrors    |                 0 |                 0 |                 0 
 ierrors    |                 0 |                 0 |                 0 
 
-status:  -
+status:  |
 
 Press 'ESC' for navigation panel...
 status: 
@@ -442,20 +442,20 @@ tui>
 
 ### DownLink measurement
 
-In the following example, use the load profile [`udp_1pkt_simple.py`](#dl_profile) to apply UDP traffic to the DUT at 250 Kpps for 60 seconds **via port 1**.
+In the following example, use the load profile [`udp_1pkt_simple.py`](#dl_profile) to apply UDP traffic to the DUT at 150 Kpps for 60 seconds **via port 1**.
 ```
-trex>start -f stl/udp_1pkt_simple.py -p 1 -m 250kpps -d 60
+trex>start -f stl/udp_1pkt_simple.py -p 1 -m 150kpps -d 60
 ```
-Below are some sample statistics. According to this, 504.13 Mbps of 2.89 Gbps was dropped, and 2.38 Gbps was received.
+Below are some sample statistics. According to this, 413.05 Mbps of 1.74 Gbps was dropped, and 1.33 Gbps was received.
 ```
 Global Statistics
 
-connection   : localhost, Port 4501                       total_tx_L2  : 2.89 Gbps
-version      : STL @ v3.06                                total_tx_L1  : 2.93 Gbps
-cpu_util.    : 2.78% @ 1 cores (1 per dual port)          total_rx     : 2.38 Gbps
-rx_cpu_util. : 0.24% / 200.08 Kpps                        total_pps    : 249.75 Kpps
-async_util.  : 0% / 7.43 bps                              drop_rate    : 504.13 Mbps
-total_cps.   : 0 cps                                      queue_full   : 12,478 pkts
+connection   : localhost, Port 4501                       total_tx_L2  : 1.74 Gbps
+version      : STL @ v3.06                                total_tx_L1  : 1.76 Gbps
+cpu_util.    : 1.89% @ 1 cores (1 per dual port)          total_rx     : 1.33 Gbps
+rx_cpu_util. : 0.21% / 111.87 Kpps                        total_pps    : 150.36 Kpps
+async_util.  : 0% / 9.02 bps                              drop_rate    : 413.05 Mbps
+total_cps.   : 0 cps                                      queue_full   : 3,817 pkts
 
 Port Statistics
 
@@ -465,29 +465,29 @@ owner      |              root |              root |
 link       |                UP |                UP |                   
 state      |              IDLE |      TRANSMITTING |                   
 speed      |          200 Gb/s |          200 Gb/s |                   
-CPU util.  |              0.0% |             2.78% |                   
+CPU util.  |              0.0% |             1.89% |                   
 --         |                   |                   |                   
-Tx bps L2  |             0 bps |         2.89 Gbps |         2.89 Gbps 
-Tx bps L1  |             0 bps |         2.93 Gbps |         2.93 Gbps 
-Tx pps     |             0 pps |       249.75 Kpps |       249.75 Kpps 
-Line Util. |               0 % |            1.46 % |                   
+Tx bps L2  |          1.41 bps |         1.74 Gbps |         1.74 Gbps 
+Tx bps L1  |          2.02 bps |         1.76 Gbps |         1.76 Gbps 
+Tx pps     |             0 pps |       150.36 Kpps |       150.36 Kpps 
+Line Util. |               0 % |            0.88 % |                   
 ---        |                   |                   |                   
-Rx bps     |         2.38 Gbps |             0 bps |         2.38 Gbps 
-Rx pps     |       200.08 Kpps |             0 pps |       200.08 Kpps 
+Rx bps     |         1.33 Gbps |             0 bps |         1.33 Gbps 
+Rx pps     |       111.87 Kpps |             0 pps |       111.87 Kpps 
 ----       |                   |                   |                   
-opackets   |                 0 |           4085500 |           4085500 
-ipackets   |           3270896 |                 0 |           3270896 
-obytes     |                 0 |        5907633000 |        5907633000 
-ibytes     |        4873635040 |                 0 |        4873635040 
-tx-pkts    |            0 pkts |        4.09 Mpkts |        4.09 Mpkts 
-rx-pkts    |        3.27 Mpkts |            0 pkts |        3.27 Mpkts 
-tx-bytes   |               0 B |           5.91 GB |           5.91 GB 
-rx-bytes   |           4.87 GB |               0 B |           4.87 GB 
+opackets   |                 1 |           2007396 |           2007397 
+ipackets   |           1304349 |                 0 |           1304349 
+obytes     |                46 |        2902694616 |        2902694662 
+ibytes     |        1933043782 |                 0 |        1933043782 
+tx-pkts    |            1 pkts |        2.01 Mpkts |        2.01 Mpkts 
+rx-pkts    |         1.3 Mpkts |            0 pkts |         1.3 Mpkts 
+tx-bytes   |              46 B |            2.9 GB |            2.9 GB 
+rx-bytes   |           1.93 GB |               0 B |           1.93 GB 
 -----      |                   |                   |                   
 oerrors    |                 0 |                 0 |                 0 
 ierrors    |                 0 |                 0 |                 0 
 
-status:  /
+status:  |
 
 Press 'ESC' for navigation panel...
 status: 

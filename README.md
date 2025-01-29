@@ -510,5 +510,5 @@ I would like to thank the excellent developers and all the contributors of TRex.
 ## Changelog (summary)
 
 - [2025.01.16] Added the downlink measurement.
-- [2024.12.08] Updated Scapy from v2.4.3 to v2.6.1 and built TRex for using the PDU Session container in the GTP-U packet header. The reason is that the PDU Session container is now required when sending GTP-U packets to Open5GS UPF with the result of [this fix](https://github.com/open5gs/open5gs/commit/151275d708fc9b9b0c3af60ab40960168f9fd0a1#diff-10607d8914b6e7cbcf54fa0c2dc8d89109062d2fa3259f20a4406c87d98566f3). Please refer to [here](https://github.com/open5gs/open5gs/discussions/3593#discussioncomment-11384226) for details.
+- [2024.12.08] Updated Scapy from v2.4.3 to v2.6.1 and built TRex for using the PDU Session container in the GTP-U packet header. The reason is that a proper QFI in the PDU Session container is now required when sending GTP-U packets to Open5GS UPF with the result of [this fix](https://github.com/open5gs/open5gs/commit/151275d708fc9b9b0c3af60ab40960168f9fd0a1#diff-10607d8914b6e7cbcf54fa0c2dc8d89109062d2fa3259f20a4406c87d98566f3). Please refer to [here](https://github.com/open5gs/open5gs/discussions/3593#discussioncomment-11384226) for details.
 - [2024.11.03] Initial release.

@@ -15,9 +15,6 @@ This is intended as a preparation for measuring the performance of open source U
 
 - [Simple Overview of TRex and DUT (UPF)](#overview)
 - [Install TRex](#install)
-  - [Install required packages](#install_packages)
-  - [Update Scapy and build TRex](#build_trex)
-  - [Install TRex](#install_trex)
 - [Setup TRex](#setup)
   - [Check network devices and bus information](#check)
   - [Create configuration file](#config)
@@ -91,54 +88,28 @@ UE IP address and TEID are as follows.
 Please refer to the following for installing TRex.
 - TRex v3.06 (2024.09.17) - https://github.com/cisco-system-traffic-generator/trex-core/wiki
 
-This section explains how to build and install TRex v3.06 to `/opt/trex` directory.
-This time, build TRex using Scapy v2.6.1 instead of v2.4.3 included in TRex v3.06.
+This section explains how to install TRex v3.06 to `/opt/trex` directory.
+This time, for using the PDU Session container in the GTP-U packet header, I will replace `gtp.py` and `gtp_v2.py` of Scapy v2.4.3 included in TRex v3.06 with those of Scapy v2.6.1.
 
-<a id="install_packages"></a>
-
-### Install required packages
-
+First, download the pre-built TRex v3.06 binaries and extract it to `/opt/trex` directory.
 ```
-# apt install build-essential zlib1g-dev
+# cd /opt
+# wget --no-check-certificate https://trex-tgn.cisco.com/trex/release/v3.06.tar.gz
+# tar xfvz v3.06.tar.gz 
+# mv v3.06 trex
 ```
-
-<a id="build_trex"></a>
-
-### Update Scapy and build TRex
-
-First, git clone TRex v3.06 in an appropriate directory.
+Then, fix a bug in `dpdk_setup_ports.py` script when mounting hugepages.
 ```
-# cd ~/
-# git clone https://github.com/cisco-system-traffic-generator/trex-core
+# cd /opt
+# wget https://github.com/cisco-system-traffic-generator/trex-core/commit/d7c4e407b926db6f26736a4db6932c691cfaf80a.diff
+# cd trex
+# patch  < ../d7c4e407b926db6f26736a4db6932c691cfaf80a.diff
 ```
-Next, download Scapy v2.6.1 and extract it to the appropriate directory as follows.
+Finally, for using the PDU Session container in the GTP-U packet header, replace `gtp.py` and `gtp_v2.py` of Scapy v2.4.3 included in TRex v3.06 with those of Scapy v2.6.1.
 ```
-# cd ~/
-# wget https://github.com/secdev/scapy/archive/refs/tags/v2.6.1.tar.gz
-# tar -C ~/trex-core/scripts/external_libs -zxvf v2.6.1.tar.gz
-```
-Next, apply [this patch](https://raw.githubusercontent.com/s5uishida/install_trex/refs/heads/main/patches/update-scapy.patch) that changes Scapy v2.4.3 to v2.6.1.
-```
-# cd ~/
-# wget https://raw.githubusercontent.com/s5uishida/install_trex/refs/heads/main/patches/update-scapy.patch
-# cd trex-core
-# patch -p1 < ../update-scapy.patch
-```
-Then, build TRex.
-```
-# cd ~/trex-core/linux_dpdk
-# ./b configure
-# ./b build
-```
-
-<a id="install_trex"></a>
-
-### Install TRex
-
-Finally, install the built TRex to `/opt/trex`.
-```
-# cd ~/trex-core
-# cp -prL scripts /opt/trex
+# cd /opt
+# wget https://raw.githubusercontent.com/secdev/scapy/refs/tags/v2.6.1/scapy/contrib/gtp.py -O /opt/trex/external_libs/scapy-2.4.3/scapy/contrib/gtp.py
+# wget https://raw.githubusercontent.com/secdev/scapy/refs/tags/v2.6.1/scapy/contrib/gtp_v2.py -O /opt/trex/external_libs/scapy-2.4.3/scapy/contrib/gtp_v2.py
 ```
 
 <a id="setup"></a>
@@ -509,6 +480,7 @@ I would like to thank the excellent developers and all the contributors of TRex.
 
 ## Changelog (summary)
 
+- [2025.01.31] Changed the installation method to update `gtp.py` and `gtp_v2.py` for using the PDU Session container with the pre-built TRex v3.06 binaries.
 - [2025.01.16] Added the downlink measurement.
 - [2024.12.08] Updated Scapy from v2.4.3 to v2.6.1 and built TRex for using the PDU Session container in the GTP-U packet header. The reason is that a proper QFI in the PDU Session container is now required when sending GTP-U packets to Open5GS UPF with the result of [this fix](https://github.com/open5gs/open5gs/commit/151275d708fc9b9b0c3af60ab40960168f9fd0a1#diff-10607d8914b6e7cbcf54fa0c2dc8d89109062d2fa3259f20a4406c87d98566f3). Please refer to [here](https://github.com/open5gs/open5gs/discussions/3593#discussioncomment-11384226) for details.
 - [2024.11.03] Initial release.

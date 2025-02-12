@@ -196,7 +196,7 @@ class STLS1(object):
                                 GTP_U_Header(teid=0x00000001)/
                                 GTPPDUSessionContainer(type=1,QFI=1)/
                                 IP(src="10.45.0.2",dst="192.168.16.152",version=4)/
-                                UDP()/
+                                UDP(dport=1234,sport=1234)/
                                 (1400*'x')
                     ),
              mode = STLTXCont())
@@ -228,7 +228,7 @@ class STLS1(object):
             packet =
                     STLPktBuilder(
                         pkt = Ether()/IP(src="192.168.16.152",dst="10.45.0.2",version=4)/
-                                UDP()/
+                                UDP(dport=1234,sport=1234)/
                                 (1400*'x')
                     ),
              mode = STLTXCont())

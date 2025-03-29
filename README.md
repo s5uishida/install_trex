@@ -473,6 +473,7 @@ I would like to thank the excellent developers and all the contributors of TRex.
 
 ## Sample Configurations
 
+- [Simple PFCP Client](https://github.com/s5uishida/simple_pfcp_client)
 - [Simple Measurement of UPF Performance 6](https://github.com/s5uishida/simple_measurement_of_upf_performance_6)
 
 <a id="changelog"></a>

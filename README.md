@@ -18,7 +18,7 @@ This is intended as a preparation for measuring the performance of open source U
 - [Setup TRex](#setup)
   - [Check network devices and bus information](#check)
   - [Create configuration file](#config)
-  - [Create load profile](#load_profile)
+  - [Create load profiles](#load_profile)
     - [UpLink load profile](#ul_profile)
     - [DownLink load profile](#dl_profile)
   - [Set kernel parameter](#set_param)
@@ -170,7 +170,7 @@ I edited this file created as follows.
 
 <a id="load_profile"></a>
 
-### Create load profile
+### Create load profiles
 
 I am using the following for the TRex load profile.
 Also, the payload size is set to 1400 bytes and the QFI is set to 1.

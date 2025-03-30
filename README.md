@@ -179,11 +179,27 @@ Also, the payload size is set to 1400 bytes and the QFI is set to 1.
 
 #### UpLink load profile
 
+Create `gtp_1pkt_simple.py` for UpLink load profile in `/opt/trex/stl` directory and set the following parameters.
+
+| Item | Value (my environment) |
+| --- | --- |
+| GNB_IP_V4 | "192.168.13.131" |
+| N3_IP_V4 | "192.168.13.151" |
+| UE_IP_V4 | "10.45.0.2" |
+| DN_IP_V4 | "192.168.16.152" |
+| UL_TEID | 0x00000001 |
+
 `/opt/trex/stl/gtp_1pkt_simple.py`
 ```py
 from trex_stl_lib.api import *
 from scapy.contrib.gtp import GTP_U_Header, GTPPDUSessionContainer
 import argparse
+
+GNB_IP_V4 = "192.168.13.131"
+N3_IP_V4 = "192.168.13.151"
+UE_IP_V4 = "10.45.0.2"
+DN_IP_V4 = "192.168.16.152"
+UL_TEID = 0x00000001
 
 class STLS1(object):
 
@@ -191,11 +207,11 @@ class STLS1(object):
         return STLStream(
             packet =
                     STLPktBuilder(
-                        pkt = Ether()/IP(src="192.168.13.131",dst="192.168.13.151",version=4)/
+                        pkt = Ether()/IP(src=GNB_IP_V4,dst=N3_IP_V4,version=4)/
                                 UDP(dport=2152,sport=2152)/
-                                GTP_U_Header(teid=0x00000001)/
+                                GTP_U_Header(teid=UL_TEID)/
                                 GTPPDUSessionContainer(type=1,QFI=1)/
-                                IP(src="10.45.0.2",dst="192.168.16.152",version=4)/
+                                IP(src=UE_IP_V4,dst=DN_IP_V4,version=4)/
                                 UDP(dport=1234,sport=1234)/
                                 (1400*'x')
                     ),
@@ -216,10 +232,20 @@ def register():
 
 #### DownLink load profile
 
+Create `udp_1pkt_simple.py` for DownLink load profile in `/opt/trex/stl` directory and set the following parameters.
+
+| Item | Value (my environment) |
+| --- | --- |
+| UE_IP_V4 | "10.45.0.2" |
+| DN_IP_V4 | "192.168.16.152" |
+
 `/opt/trex/stl/udp_1pkt_simple.py`
 ```py
 from trex_stl_lib.api import *
 import argparse
+
+UE_IP_V4 = "10.45.0.2"
+DN_IP_V4 = "192.168.16.152"
 
 class STLS1(object):
 
@@ -227,7 +253,7 @@ class STLS1(object):
         return STLStream(
             packet =
                     STLPktBuilder(
-                        pkt = Ether()/IP(src="192.168.16.152",dst="10.45.0.2",version=4)/
+                        pkt = Ether()/IP(src=DN_IP_V4,dst=UE_IP_V4,version=4)/
                                 UDP(dport=1234,sport=1234)/
                                 (1400*'x')
                     ),

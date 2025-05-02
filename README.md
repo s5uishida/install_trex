@@ -25,6 +25,7 @@ This is intended as a preparation for measuring the performance of open source U
 - [Run TRex](#run)
   - [UpLink measurement](#ul_measurement)
   - [DownLink measurement](#dl_measurement)
+- [How to capture packets on DPDK ports](#pcap)
 - [Sample Configurations](#sample_conf)
 - [Changelog (summary)](#changelog)
 
@@ -494,6 +495,16 @@ tui>
 With the above steps, TRex has been constructed.
 Although the settings differ for each UPF, I believe this has made some progress in preparing to measure open source UPFs performance using TRex.
 I would like to thank the excellent developers and all the contributors of TRex.
+
+<a id="pcap"></a>
+
+## How to capture packets on DPDK ports
+
+There are three ways to do this.
+
+1. [How to use packet capturing feature of TRex](https://trex-tgn.cisco.com/trex/doc/trex_stateless.html)
+2. [How to run `dpdk-dumpcap`](https://doc.dpdk.org/guides/howto/packet_capture_framework.html)
+3. [How to run `tcpdump` on another VM by configuring a bridge interface linked to a network interface under DPDK control](https://github.com/s5uishida/proxmox_ve_tips#enable_promisc)
 
 <a id="sample_conf"></a>
 

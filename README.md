@@ -670,7 +670,7 @@ tui>
 
 #### DownLink latency measurement
 
-In the following example, use the latency profile [`udp_latency_1pkt_simple.py`](#dl_load_profile) to apply UDP traffic to the DUT at 1 pps for 10 seconds **via port 1**.
+In the following example, use the latency profile [`udp_latency_1pkt_simple.py`](#dl_latency_profile) to apply UDP traffic to the DUT at 1 pps for 10 seconds **via port 1**.
 ```
 trex>start -f stl/udp_latency_1pkt_simple.py -p 1 -d 10
 ```

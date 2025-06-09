@@ -19,12 +19,19 @@ This is intended as a preparation for measuring the performance of open source U
   - [Check network devices and bus information](#check)
   - [Create configuration file](#config)
   - [Create load profiles](#load_profile)
-    - [UpLink load profile](#ul_profile)
-    - [DownLink load profile](#dl_profile)
+    - [UpLink load profile](#ul_load_profile)
+    - [DownLink load profile](#dl_load_profile)
+  - [Create latency profiles](#latency_profile)
+    - [UpLink latency profile](#ul_latency_profile)
+    - [DownLink latency profile](#dl_latency_profile)
   - [Set kernel parameter](#set_param)
 - [Run TRex](#run)
   - [UpLink measurement](#ul_measurement)
+    - [UpLink load measurement](#ul_load_measurement)
+    - [UpLink latency measurement](#ul_latency_measurement)
   - [DownLink measurement](#dl_measurement)
+    - [DownLink load measurement](#dl_load_measurement)
+    - [DownLink latency measurement](#dl_latency_measurement)
 - [How to capture packets on DPDK ports](#pcap)
 - [Sample Configurations](#sample_conf)
 - [Changelog (summary)](#changelog)
@@ -176,7 +183,7 @@ I edited this file created as follows.
 I am using the following for the TRex load profile.
 Also, the payload size is set to 1400 bytes and the QFI is set to 1.
 
-<a id="ul_profile"></a>
+<a id="ul_load_profile"></a>
 
 #### UpLink load profile
 
@@ -229,7 +236,7 @@ def register():
     return STLS1()
 ```
 
-<a id="dl_profile"></a>
+<a id="dl_load_profile"></a>
 
 #### DownLink load profile
 
@@ -259,6 +266,115 @@ class STLS1(object):
                                 (1400*'x')
                     ),
              mode = STLTXCont())
+
+    def get_streams (self, tunables, **kwargs):
+        parser = argparse.ArgumentParser(description='Argparser for {}'.format(os.path.basename(__file__)),
+                                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        args = parser.parse_args(tunables)
+        # create 1 stream
+        return [ self.create_stream() ]
+
+def register():
+    return STLS1()
+```
+
+<a id="latency_profile"></a>
+
+### Create latency profiles
+
+I am using the following for the TRex latency profile.
+Also, the payload size is set to 1400 bytes and the QFI is set to 1.
+
+**Note. For perfomance reasons, latency streams are not affected by `-m` flag when running `start` command in the trex console, so you can only change the pps value by editing the profile code. Here, `STLTXCont(pps=1)` is set in `mode` argument of `STLStream()` as follows.**
+```
+mode = STLTXCont(pps=1)
+```
+
+<a id="ul_latency_profile"></a>
+
+#### UpLink latency profile
+
+Create `gtp_latency_1pkt_simple.py` for UpLink latency profile in `/opt/trex/stl` directory and set the following parameters.
+
+| Item | Value (my environment) |
+| --- | --- |
+| GNB_IP_V4 | "192.168.13.131" |
+| N3_IP_V4 | "192.168.13.151" |
+| UE_IP_V4 | "10.45.0.2" |
+| DN_IP_V4 | "192.168.16.152" |
+| UL_TEID | 0x00000001 |
+
+`/opt/trex/stl/gtp_latency_1pkt_simple.py`
+```py
+from trex_stl_lib.api import *
+from scapy.contrib.gtp import GTP_U_Header, GTPPDUSessionContainer
+import argparse
+
+GNB_IP_V4 = "192.168.13.131"
+N3_IP_V4 = "192.168.13.151"
+UE_IP_V4 = "10.45.0.2"
+DN_IP_V4 = "192.168.16.152"
+UL_TEID = 0x00000001
+
+class STLS1(object):
+
+    def create_stream (self):
+        return STLStream(
+            packet =
+                    STLPktBuilder(
+                        pkt = Ether()/IP(src=GNB_IP_V4,dst=N3_IP_V4,version=4)/
+                                UDP(dport=2152,sport=2152,chksum=0)/
+                                GTP_U_Header(teid=UL_TEID)/
+                                GTPPDUSessionContainer(type=1,QFI=1)/
+                                IP(src=UE_IP_V4,dst=DN_IP_V4,version=4)/
+                                UDP(dport=1234,sport=1234)/
+                                (1400*'x')
+                    ),
+             flow_stats = STLFlowLatencyStats(pg_id=0),
+             mode = STLTXCont(pps=1))
+
+    def get_streams (self, tunables, **kwargs):
+        parser = argparse.ArgumentParser(description='Argparser for {}'.format(os.path.basename(__file__)),
+                                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        args = parser.parse_args(tunables)
+        # create 1 stream
+        return [ self.create_stream() ]
+
+def register():
+    return STLS1()
+```
+
+<a id="dl_latency_profile"></a>
+
+#### DownLink latency profile
+
+Create `udp_latency_1pkt_simple.py` for DownLink latency profile in `/opt/trex/stl` directory and set the following parameters.
+
+| Item | Value (my environment) |
+| --- | --- |
+| UE_IP_V4 | "10.45.0.2" |
+| DN_IP_V4 | "192.168.16.152" |
+
+`/opt/trex/stl/udp_latency_1pkt_simple.py`
+```py
+from trex_stl_lib.api import *
+import argparse
+
+UE_IP_V4 = "10.45.0.2"
+DN_IP_V4 = "192.168.16.152"
+
+class STLS1(object):
+
+    def create_stream (self):
+        return STLStream(
+            packet =
+                    STLPktBuilder(
+                        pkt = Ether()/IP(src=DN_IP_V4,dst=UE_IP_V4,version=4)/
+                                UDP(dport=1234,sport=1234)/
+                                (1400*'x')
+                    ),
+             flow_stats = STLFlowLatencyStats(pg_id=1),
+             mode = STLTXCont(pps=1))
 
     def get_streams (self, tunables, **kwargs):
         parser = argparse.ArgumentParser(description='Argparser for {}'.format(os.path.basename(__file__)),
@@ -378,7 +494,11 @@ Then, apply traffic to the DUT.
 
 ### UpLink measurement
 
-In the following example, use the load profile [`gtp_1pkt_simple.py`](#ul_profile) to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds **via port 0**.
+<a id="ul_load_measurement"></a>
+
+#### UpLink load measurement
+
+In the following example, use the load profile [`gtp_1pkt_simple.py`](#ul_load_profile) to apply GTP-U traffic to the DUT at 150 Kpps for 60 seconds **via port 0**.
 ```
 trex>start -f stl/gtp_1pkt_simple.py -p 0 -m 150kpps -d 60
 ```
@@ -435,13 +555,67 @@ status:
 tui>
 ```
 
+<a id="ul_latency_measurement"></a>
+
+#### UpLink latency measurement
+
+In the following example, use the latency profile [`gtp_latency_1pkt_simple.py`](#ul_latency_profile) to apply GTP-U traffic to the DUT at 1 pps for 10 seconds **via port 0**.
+```
+trex>start -f stl/gtp_latency_1pkt_simple.py -p 0 -d 10
+```
+To check the latency statistics, type `stats -l` in the TRex console.
+```
+trex>stats -l
+```
+Below are some sample statistics. According to this, The average latency is 0.274 (msec), the maximum is 0.310 (msec), and the minimum is 0.247 (msec).
+```
+Latency Statistics
+
+   PG ID     |       0        
+-------------+---------------
+TX pkts      |             11 
+RX pkts      |             11 
+Max latency  |            310 
+Min latency  |            247 
+Avg latency  |            274 
+-- Window -- |                
+Last max     |            258 
+Last-1       |                
+Last-2       |                
+Last-3       |                
+Last-4       |                
+Last-5       |                
+Last-6       |                
+Last-7       |                
+Last-8       |                
+Last-9       |                
+Last-10      |                
+Last-11      |                
+Last-12      |                
+Last-13      |                
+---          |                
+Jitter       |             23 
+----         |                
+Errors       |              0 
+
+trex>
+```
+
 <a id="dl_measurement"></a>
 
 ### DownLink measurement
 
-In the following example, use the load profile [`udp_1pkt_simple.py`](#dl_profile) to apply UDP traffic to the DUT at 150 Kpps for 60 seconds **via port 1**.
+<a id="dl_load_measurement"></a>
+
+#### DownLink load measurement
+
+In the following example, use the load profile [`udp_1pkt_simple.py`](#dl_load_profile) to apply UDP traffic to the DUT at 150 Kpps for 60 seconds **via port 1**.
 ```
 trex>start -f stl/udp_1pkt_simple.py -p 1 -m 150kpps -d 60
+```
+To check the traffic statistics, type `tui` in the TRex console to switch the view.
+```
+trex>tui
 ```
 Below are some sample statistics. According to this, 413.05 Mbps of 1.74 Gbps was dropped, and 1.33 Gbps was received.
 ```
@@ -492,6 +666,52 @@ status:
 tui>
 ```
 
+<a id="dl_latency_measurement"></a>
+
+#### DownLink latency measurement
+
+In the following example, use the latency profile [`udp_latency_1pkt_simple.py`](#dl_load_profile) to apply UDP traffic to the DUT at 1 pps for 10 seconds **via port 1**.
+```
+trex>start -f stl/udp_latency_1pkt_simple.py -p 1 -d 10
+```
+To check the latency statistics, type `stats -l` in the TRex console.
+```
+trex>stats -l
+```
+Below are some sample statistics. According to this, The average latency is 0.278 (msec), the maximum is 0.303 (msec), and the minimum is 0.236 (msec).
+```
+Latency Statistics
+
+   PG ID     |       1        
+-------------+---------------
+TX pkts      |             11 
+RX pkts      |             11 
+Max latency  |            303 
+Min latency  |            236 
+Avg latency  |            278 
+-- Window -- |                
+Last max     |            303 
+Last-1       |                
+Last-2       |                
+Last-3       |                
+Last-4       |                
+Last-5       |                
+Last-6       |                
+Last-7       |                
+Last-8       |                
+Last-9       |                
+Last-10      |                
+Last-11      |                
+Last-12      |                
+Last-13      |                
+---          |                
+Jitter       |             27 
+----         |                
+Errors       |              0 
+
+trex>
+```
+
 <a id="pcap"></a>
 
 ## How to capture packets on DPDK ports
@@ -513,11 +733,13 @@ I would like to thank the excellent developers and all the contributors of TRex.
 
 - [Simple PFCP Client](https://github.com/s5uishida/simple_pfcp_client)
 - [Simple Measurement of UPF Performance 6](https://github.com/s5uishida/simple_measurement_of_upf_performance_6)
+- [Simple Measurement of UPF Performance 9](https://github.com/s5uishida/simple_measurement_of_upf_performance_9)
 
 <a id="changelog"></a>
 
 ## Changelog (summary)
 
+- [2025.06.09] Added the latency measurement.
 - [2025.01.31] Changed the installation method to update `gtp.py` and `gtp_v2.py` for using the PDU Session container with the pre-built TRex v3.06 binaries.
 - [2025.01.16] Added the downlink measurement.
 - [2024.12.08] Updated Scapy from v2.4.3 to v2.6.1 and built TRex for using the PDU Session container in the GTP-U packet header. The reason is that a proper QFI in the PDU Session container is now required when sending GTP-U packets to Open5GS UPF with the result of [this fix](https://github.com/open5gs/open5gs/commit/151275d708fc9b9b0c3af60ab40960168f9fd0a1#diff-10607d8914b6e7cbcf54fa0c2dc8d89109062d2fa3259f20a4406c87d98566f3). Please refer to [here](https://github.com/open5gs/open5gs/discussions/3593#discussioncomment-11384226) for details.

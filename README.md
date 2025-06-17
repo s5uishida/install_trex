@@ -285,8 +285,11 @@ def register():
 I am using the following for the TRex latency profile.
 Also, the payload size is set to 1400 bytes and the QFI is set to 1.
 
-**Note. For perfomance reasons, latency streams are not affected by `-m` flag when running `start` command in the trex console, so you can only change the pps value by editing the profile code. Here, `STLTXCont(pps=1)` is set in `mode` argument of `STLStream()` as follows.
-And in TRex STL mode, using STLFlowLatencyStats on a UDP packet will invalidate the UDP checksum value. The reason is that when using STLFlowLatencyStats, the last 16 bytes of the payload are rewritten. This will result in an incorrect UDP checksum value on the receiving side. Therefore, set the UDP checksum value to zero to ignore it.**
+**Note. In TRex STL mode, using STLFlowLatencyStats on a UDP packet will invalidate the UDP checksum value. The reason is that when using STLFlowLatencyStats, the last 16 bytes of the payload are rewritten. This will result in an incorrect UDP checksum value on the receiving side. Therefore, set the UDP checksum value to zero to ignore it.**
+```
+UDP(dport=2152,sport=2152,chksum=0)
+```
+**And for perfomance reasons, latency streams are not affected by `-m` flag when running `start` command in the trex console, so you can only change the pps value by editing the profile code. Here, `STLTXCont(pps=1)` is set in `mode` argument of `STLStream()` as follows.**
 ```
 mode = STLTXCont(pps=1)
 ```

@@ -53,13 +53,13 @@ The built simulation environment is as follows.
 <img src="./images/network-overview.png" title="./images/network-overview.png" width=700px></img>
 
 The TRex used is as follows.
-- TRex v3.06 (2024.09.17) - https://github.com/cisco-system-traffic-generator/trex-core
+- TRex v3.08 (2025.11.05) - https://github.com/cisco-system-traffic-generator/trex-core
 - Scapy v2.6.1 (2024.11.05) - https://github.com/secdev/scapy
 
 Each VMs are as follows.  
 | VM | SW & Role | IP address | OS | CPU<br>(Min) | Mem<br>(Min) | HDD<br>(Min) |
 | --- | --- | --- | --- | --- | --- | --- |
-| VM-TG | TRex<br>Traffic Generator | 192.168.0.131/24 | Ubuntu 22.04 | 3 | 8GB | 20GB |
+| VM-TG | TRex<br>Traffic Generator | 192.168.0.131/24 | Ubuntu 24.04 | 3 | 8GB | 20GB |
 | VM-DUT | each UPF DUT<br>(Device Under Test) | 192.168.0.151/24 | Ubuntu 24.04<br>or 22.04 | 2 | 8GB | 20GB |
 
 The network interfaces of each VM are as follows.
@@ -94,26 +94,19 @@ UE IP address and TEID are as follows.
 ## Install TRex
 
 Please refer to the following for installing TRex.
-- TRex v3.06 (2024.09.17) - https://github.com/cisco-system-traffic-generator/trex-core/wiki
+- TRex v3.08 (2025.11.05) - https://github.com/cisco-system-traffic-generator/trex-core/wiki
 
-This section explains how to install TRex v3.06 to `/opt/trex` directory.
-This time, for using the PDU Session container in the GTP-U packet header, I will replace `gtp.py` and `gtp_v2.py` of Scapy v2.4.3 included in TRex v3.06 with those of Scapy v2.6.1.
+This section explains how to install TRex v3.08 to `/opt/trex` directory.
+This time, for using the PDU Session container in the GTP-U packet header, I will replace `gtp.py` and `gtp_v2.py` of Scapy v2.4.3 included in TRex v3.08 with those of Scapy v2.6.1.
 
-First, download the pre-built TRex v3.06 binaries and extract it to `/opt/trex` directory.
+First, download the pre-built TRex v3.08 binaries and extract it to `/opt/trex` directory.
 ```
 # cd /opt
-# wget --no-check-certificate https://trex-tgn.cisco.com/trex/release/v3.06.tar.gz
-# tar xfvz v3.06.tar.gz 
-# mv v3.06 trex
+# wget --no-check-certificate https://trex-tgn.cisco.com/trex/release/v3.08.tar.gz
+# tar xfvz v3.08.tar.gz 
+# mv v3.08 trex
 ```
-Then, fix a bug in `dpdk_setup_ports.py` script when mounting hugepages.
-```
-# cd /opt
-# wget https://github.com/cisco-system-traffic-generator/trex-core/commit/d7c4e407b926db6f26736a4db6932c691cfaf80a.diff
-# cd trex
-# patch  < ../d7c4e407b926db6f26736a4db6932c691cfaf80a.diff
-```
-Finally, for using the PDU Session container in the GTP-U packet header, replace `gtp.py` and `gtp_v2.py` of Scapy v2.4.3 included in TRex v3.06 with those of Scapy v2.6.1.
+Then, for using the PDU Session container in the GTP-U packet header, replace `gtp.py` and `gtp_v2.py` of Scapy v2.4.3 included in TRex v3.08 with those of Scapy v2.6.1.
 ```
 # wget https://raw.githubusercontent.com/secdev/scapy/refs/tags/v2.6.1/scapy/contrib/gtp.py -O /opt/trex/external_libs/scapy-2.4.3/scapy/contrib/gtp.py
 # wget https://raw.githubusercontent.com/secdev/scapy/refs/tags/v2.6.1/scapy/contrib/gtp_v2.py -O /opt/trex/external_libs/scapy-2.4.3/scapy/contrib/gtp_v2.py
@@ -435,10 +428,10 @@ vxlan fs        |          -           |          -
 layer mode      |         IPv4         |         IPv4         
 src IPv4        |    192.168.13.131    |    192.168.16.152    
 IPv6            |         off          |         off          
-src MAC         |  bc:24:11:6b:bf:13   |  bc:24:11:5c:31:7b   
+src MAC         |  bc:24:11:51:b6:55   |  bc:24:11:18:b4:63   
 ---             |                      |                      
 Destination     |    192.168.13.151    |    192.168.16.151    
-ARP Resolution  |  bc:24:11:74:fe:7b   |  bc:24:11:bf:d4:23   
+ARP Resolution  |  bc:24:11:4a:0c:dc   |  bc:24:11:42:ed:8e   
 ----            |                      |                      
 VLAN            |          -           |          -           
 -----           |                      |                      
@@ -457,7 +450,7 @@ trex>service
 
 Enabling service mode on port(s): [0, 1]                     [SUCCESS]
 
-12.98 [ms]
+10.62 [ms]
 
 trex(service)>
 ```
@@ -465,18 +458,18 @@ trex(service)>
 trex(service)>ping -p 0 -d 192.168.13.151 -n 3
 
 Pinging 192.168.13.151 from port 0 with 64 bytes of data:    
-Reply from 192.168.13.151: bytes=64, time=46.84ms, TTL=64
-Reply from 192.168.13.151: bytes=64, time=2.78ms, TTL=64
-Reply from 192.168.13.151: bytes=64, time=1.59ms, TTL=64
+Reply from 192.168.13.151: bytes=64, time=2.00ms, TTL=64
+Reply from 192.168.13.151: bytes=64, time=1.26ms, TTL=64
+Reply from 192.168.13.151: bytes=64, time=2.61ms, TTL=64
 trex(service)>
 ```
 ```
 trex(service)>ping -p 1 -d 192.168.16.151 -n 3
 
 Pinging 192.168.16.151 from port 1 with 64 bytes of data:    
-Reply from 192.168.16.151: bytes=64, time=9.11ms, TTL=64
-Reply from 192.168.16.151: bytes=64, time=1.47ms, TTL=64
-Reply from 192.168.16.151: bytes=64, time=2.66ms, TTL=64
+Reply from 192.168.16.151: bytes=64, time=33.58ms, TTL=64
+Reply from 192.168.16.151: bytes=64, time=1.84ms, TTL=64
+Reply from 192.168.16.151: bytes=64, time=3.05ms, TTL=64
 trex(service)>
 ```
 Once confirmed that ping works, the service mode exit.
@@ -485,7 +478,7 @@ trex(service)>service --off
 
 Disabling service mode on port(s): [0, 1]                    [SUCCESS]
 
-11.86 [ms]
+7.59 [ms]
 
 trex>
 ```
@@ -507,16 +500,16 @@ To check the traffic statistics, type `tui` in the TRex console to switch the vi
 ```
 trex>tui
 ```
-Below are some sample statistics. According to this, 705.53 Mbps of 1.79 Gbps was dropped, and 1.08 Gbps was received.
+Below are some sample statistics. According to this, 626.15 Mbps of 1.79 Gbps was dropped, and 1.16 Gbps was received.
 ```
 Global Statistics
 
-connection   : localhost, Port 4501                       total_tx_L2  : 1.79 Gbps
-version      : STL @ v3.06                                total_tx_L1  : 1.81 Gbps
-cpu_util.    : 1.68% @ 1 cores (1 per dual port)          total_rx     : 1.08 Gbps
-rx_cpu_util. : 0.18% / 93.65 Kpps                         total_pps    : 150.07 Kpps
-async_util.  : 0% / 4.79 bps                              drop_rate    : 705.53 Mbps
-total_cps.   : 0 cps                                      queue_full   : 12,034 pkts
+connection   : localhost, Port 4501                       total_tx_L2  : 1.79 Gbps                      
+version      : STL @ v3.08                                total_tx_L1  : 1.81 Gbps                      
+cpu_util.    : 1.81% @ 1 cores (1 per dual port)          total_rx     : 1.16 Gbps                      
+rx_cpu_util. : 0.18% / 100.57 Kpps                        total_pps    : 150.13 Kpps                    
+async_util.  : 0% / 10.01 bps                             drop_rate    : 626.15 Mbps                    
+total_cps.   : 0 cps                                      queue_full   : 15,046 pkts                    
 
 Port Statistics
 
@@ -526,29 +519,29 @@ owner      |              root |              root |
 link       |                UP |                UP |                   
 state      |      TRANSMITTING |              IDLE |                   
 speed      |          200 Gb/s |          200 Gb/s |                   
-CPU util.  |             1.68% |              0.0% |                   
+CPU util.  |             1.81% |              0.0% |                   
 --         |                   |                   |                   
-Tx bps L2  |         1.79 Gbps |          0.09 bps |         1.79 Gbps 
-Tx bps L1  |         1.81 Gbps |          0.13 bps |         1.81 Gbps 
-Tx pps     |       150.07 Kpps |             0 pps |       150.07 Kpps 
+Tx bps L2  |         1.79 Gbps |             0 bps |         1.79 Gbps 
+Tx bps L1  |         1.81 Gbps |             0 bps |         1.81 Gbps 
+Tx pps     |       150.13 Kpps |             0 pps |       150.13 Kpps 
 Line Util. |            0.91 % |               0 % |                   
 ---        |                   |                   |                   
-Rx bps     |             0 bps |         1.08 Gbps |         1.08 Gbps 
-Rx pps     |             0 pps |        93.65 Kpps |        93.65 Kpps 
+Rx bps     |             0 bps |         1.16 Gbps |         1.16 Gbps 
+Rx pps     |             0 pps |       100.57 Kpps |       100.57 Kpps 
 ----       |                   |                   |                   
-opackets   |           2687829 |                 1 |           2687830 
-ipackets   |                 0 |           1739130 |           1739130 
-obytes     |        4004865210 |                46 |        4004865256 
-ibytes     |                 0 |        2514780580 |        2514780580 
-tx-pkts    |        2.69 Mpkts |            1 pkts |        2.69 Mpkts 
-rx-pkts    |            0 pkts |        1.74 Mpkts |        1.74 Mpkts 
-tx-bytes   |              4 GB |              46 B |              4 GB 
-rx-bytes   |               0 B |           2.51 GB |           2.51 GB 
+opackets   |           3727565 |                 1 |           3727566 
+ipackets   |                 0 |           2451753 |           2451753 
+obytes     |        5554071850 |                46 |        5554071896 
+ibytes     |                 0 |        3545233438 |        3545233438 
+tx-pkts    |        3.73 Mpkts |            1 pkts |        3.73 Mpkts 
+rx-pkts    |            0 pkts |        2.45 Mpkts |        2.45 Mpkts 
+tx-bytes   |           5.55 GB |              46 B |           5.55 GB 
+rx-bytes   |               0 B |           3.55 GB |           3.55 GB 
 -----      |                   |                   |                   
 oerrors    |                 0 |                 0 |                 0 
 ierrors    |                 0 |                 0 |                 0 
 
-status:  |
+status:  \
 
 Press 'ESC' for navigation panel...
 status: 
@@ -568,7 +561,7 @@ To check the latency statistics, type `stats -l` in the TRex console.
 ```
 trex>stats -l
 ```
-Below are some sample statistics. According to this, The average latency is 0.274 (msec), the maximum is 0.310 (msec), and the minimum is 0.247 (msec).
+Below are some sample statistics. According to this, The average latency is 0.285 (msec), the maximum is 0.307 (msec), and the minimum is 0.256 (msec).
 ```
 Latency Statistics
 
@@ -576,11 +569,11 @@ Latency Statistics
 -------------+---------------
 TX pkts      |             11 
 RX pkts      |             11 
-Max latency  |            310 
-Min latency  |            247 
-Avg latency  |            274 
+Max latency  |            307 
+Min latency  |            256 
+Avg latency  |            285 
 -- Window -- |                
-Last max     |            258 
+Last max     |            279 
 Last-1       |                
 Last-2       |                
 Last-3       |                
@@ -595,7 +588,7 @@ Last-11      |
 Last-12      |                
 Last-13      |                
 ---          |                
-Jitter       |             23 
+Jitter       |             20 
 ----         |                
 Errors       |              0 
 
@@ -618,16 +611,16 @@ To check the traffic statistics, type `tui` in the TRex console to switch the vi
 ```
 trex>tui
 ```
-Below are some sample statistics. According to this, 413.05 Mbps of 1.74 Gbps was dropped, and 1.33 Gbps was received.
+Below are some sample statistics. According to this, 671.65 Mbps of 1.73 Gbps was dropped, and 1.06 Gbps was received.
 ```
 Global Statistics
 
-connection   : localhost, Port 4501                       total_tx_L2  : 1.74 Gbps
-version      : STL @ v3.06                                total_tx_L1  : 1.76 Gbps
-cpu_util.    : 1.89% @ 1 cores (1 per dual port)          total_rx     : 1.33 Gbps
-rx_cpu_util. : 0.21% / 111.87 Kpps                        total_pps    : 150.36 Kpps
-async_util.  : 0% / 9.02 bps                              drop_rate    : 413.05 Mbps
-total_cps.   : 0 cps                                      queue_full   : 3,817 pkts
+connection   : localhost, Port 4501                       total_tx_L2  : 1.73 Gbps                      
+version      : STL @ v3.08                                total_tx_L1  : 1.75 Gbps                      
+cpu_util.    : 2.36% @ 1 cores (1 per dual port)          total_rx     : 1.06 Gbps                      
+rx_cpu_util. : 0.06% / 89.04 Kpps                         total_pps    : 149.32 Kpps                    
+async_util.  : 0% / 8.26 bps                              drop_rate    : 671.65 Mbps                    
+total_cps.   : 0 cps                                      queue_full   : 67,608 pkts                    
 
 Port Statistics
 
@@ -637,29 +630,29 @@ owner      |              root |              root |
 link       |                UP |                UP |                   
 state      |              IDLE |      TRANSMITTING |                   
 speed      |          200 Gb/s |          200 Gb/s |                   
-CPU util.  |              0.0% |             1.89% |                   
+CPU util.  |              0.0% |             2.36% |                   
 --         |                   |                   |                   
-Tx bps L2  |          1.41 bps |         1.74 Gbps |         1.74 Gbps 
-Tx bps L1  |          2.02 bps |         1.76 Gbps |         1.76 Gbps 
-Tx pps     |             0 pps |       150.36 Kpps |       150.36 Kpps 
+Tx bps L2  |             0 bps |         1.73 Gbps |         1.73 Gbps 
+Tx bps L1  |             0 bps |         1.75 Gbps |         1.75 Gbps 
+Tx pps     |             0 pps |       149.32 Kpps |       149.32 Kpps 
 Line Util. |               0 % |            0.88 % |                   
 ---        |                   |                   |                   
-Rx bps     |         1.33 Gbps |             0 bps |         1.33 Gbps 
-Rx pps     |       111.87 Kpps |             0 pps |       111.87 Kpps 
+Rx bps     |         1.06 Gbps |             0 bps |         1.06 Gbps 
+Rx pps     |        89.04 Kpps |             0 pps |        89.04 Kpps 
 ----       |                   |                   |                   
-opackets   |                 1 |           2007396 |           2007397 
-ipackets   |           1304349 |                 0 |           1304349 
-obytes     |                46 |        2902694616 |        2902694662 
-ibytes     |        1933043782 |                 0 |        1933043782 
-tx-pkts    |            1 pkts |        2.01 Mpkts |        2.01 Mpkts 
-rx-pkts    |         1.3 Mpkts |            0 pkts |         1.3 Mpkts 
-tx-bytes   |              46 B |            2.9 GB |            2.9 GB 
-rx-bytes   |           1.93 GB |               0 B |           1.93 GB 
+opackets   |                 1 |           6083347 |           6083348 
+ipackets   |           3453893 |                 0 |           3453893 
+obytes     |                46 |        8796519762 |        8796519808 
+ibytes     |        5118667990 |                 0 |        5118667990 
+tx-pkts    |            1 pkts |        6.08 Mpkts |        6.08 Mpkts 
+rx-pkts    |        3.45 Mpkts |            0 pkts |        3.45 Mpkts 
+tx-bytes   |              46 B |            8.8 GB |            8.8 GB 
+rx-bytes   |           5.12 GB |               0 B |           5.12 GB 
 -----      |                   |                   |                   
 oerrors    |                 0 |                 0 |                 0 
 ierrors    |                 0 |                 0 |                 0 
 
-status:  |
+status:  -
 
 Press 'ESC' for navigation panel...
 status: 
@@ -679,7 +672,7 @@ To check the latency statistics, type `stats -l` in the TRex console.
 ```
 trex>stats -l
 ```
-Below are some sample statistics. According to this, The average latency is 0.278 (msec), the maximum is 0.303 (msec), and the minimum is 0.236 (msec).
+Below are some sample statistics. According to this, The average latency is 0.314 (msec), the maximum is 0.368 (msec), and the minimum is 0.262 (msec).
 ```
 Latency Statistics
 
@@ -687,11 +680,11 @@ Latency Statistics
 -------------+---------------
 TX pkts      |             11 
 RX pkts      |             11 
-Max latency  |            303 
-Min latency  |            236 
-Avg latency  |            278 
+Max latency  |            368 
+Min latency  |            262 
+Avg latency  |            314 
 -- Window -- |                
-Last max     |            303 
+Last max     |            285 
 Last-1       |                
 Last-2       |                
 Last-3       |                
@@ -706,7 +699,7 @@ Last-11      |
 Last-12      |                
 Last-13      |                
 ---          |                
-Jitter       |             27 
+Jitter       |             26 
 ----         |                
 Errors       |              0 
 
@@ -740,6 +733,7 @@ I would like to thank the excellent developers and all the contributors of TRex.
 
 ## Changelog (summary)
 
+- [2025.11.29] Updated TRex from v3.06 to v3.08 and the OS from Ubuntu 22.04 to 24.04.
 - [2025.06.09] Added the latency measurement.
 - [2025.01.31] Changed the installation method to update `gtp.py` and `gtp_v2.py` for using the PDU Session container with the pre-built TRex v3.06 binaries.
 - [2025.01.16] Added the downlink measurement.

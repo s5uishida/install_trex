@@ -385,9 +385,9 @@ def register():
 
 ### Set kernel parameter
 
-Set `vm.nr_hugepages` to 2048.
+Set `vm.nr_hugepages` to 1024.
 ```
-# sysctl vm.nr_hugepages=2048
+# sysctl vm.nr_hugepages=1024
 ```
 Then mount the HugePages as `hugetlbfs`(HugeTLB) file system.
 ```

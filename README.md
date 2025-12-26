@@ -389,6 +389,11 @@ Set `vm.nr_hugepages` to 2048.
 ```
 # sysctl vm.nr_hugepages=2048
 ```
+Then mount the HugePages as `hugetlbfs`(HugeTLB) file system.
+```
+# mkdir -p /mnt/huge
+# mount -t hugetlbfs nodev /mnt/huge
+```
 
 <a id="run"></a>
 

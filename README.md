@@ -60,7 +60,7 @@ Each VMs are as follows.
 | VM | SW & Role | IP address | OS | CPU<br>(Min) | Mem<br>(Min) | HDD<br>(Min) |
 | --- | --- | --- | --- | --- | --- | --- |
 | VM-TG | TRex<br>Traffic Generator | 192.168.0.131/24 | Ubuntu 24.04 | 3 | 8GB | 10GB |
-| VM-DUT | each UPF DUT<br>(Device Under Test) | 192.168.0.151/24 | Ubuntu 24.04<br>or 22.04 | 2 | 8GB | 10GB |
+| VM-DUT | each UPF DUT<br>(Device Under Test) | 192.168.0.151/24 | Ubuntu 24.04 | 2 | 8GB | 10GB |
 
 The network interfaces of each VM are as follows.
 | VM | Device | Model | Linux Bridge | IP address | Interface | Under<br>DPDK |

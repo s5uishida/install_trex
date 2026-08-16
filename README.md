@@ -154,6 +154,7 @@ I edited this file created as follows.
 
 - version: 2
   interfaces: ['00:14.0', '00:15.0']
+  port_mtu: 1500
   port_info:
       - ip: 192.168.13.131
         default_gw: 192.168.13.151
